@@ -747,8 +747,8 @@ bool
 Options::default_no_color()
 {
 	static const auto no_color =
-		!::isatty(::fileno(stdout)) ||
-		!::isatty(::fileno(stderr)) ||
+		!::isatty(fileno(stdout)) ||
+		!::isatty(fileno(stderr)) ||
 		::getenv("NO_COLOR") != NULL;
 
 	return no_color;

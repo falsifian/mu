@@ -17,10 +17,7 @@
 **  02110-1301, USA.
 */
 
-#ifndef _XOPEN_SOURCE
-#define _XOPEN_SOURCE
 #include <stdexcept>
-#endif /*_XOPEN_SOURCE*/
 
 #include <array>
 

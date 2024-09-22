@@ -120,7 +120,7 @@ Mu::mu_cmd_server(const Mu::Options& opts) try {
 		   opts.debug ? "yes" : "no",
 		   have_readline() ? "yes" : "no");
 
-	tty = ::isatty(::fileno(stdout));
+	tty = ::isatty(fileno(stdout));
 	const auto eval = std::string{opts.server.commands ? "(help :full t)" : opts.server.eval};
 	if (!eval.empty()) {
 		server.invoke(eval);
