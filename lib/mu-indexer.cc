@@ -200,14 +200,20 @@ Indexer::Private::handler(const std::string& fullpath, struct stat* statbuf,
 	case Scanner::HandleType::File: {
 		++progress_.checked;
 
+		/* TODO: move this check somewhere else where we're guaranteed to have the statbuf
 		if ((size_t)statbuf->st_size > max_message_size_) {
 			mu_debug("skip {} (too big: {} bytes)", fullpath, statbuf->st_size);
 			return false;
 		}
+		*/
 
+		// TODO: update comment and use a new setting about whether to use ctime
+		//
 		// if the message is not in the db yet, or not up-to-date, queue
 		// it for updating/inserting.
-		if (statbuf->st_ctime <= dirstamp_ && store_.contains_message(fullpath))
+		//
+		// if (statbuf->st_ctime <= dirstamp_ && store_.contains_message(fullpath))
+		if (store_.contains_message(fullpath))
 			return false;
 
 		// push the remaining messages to our "todo" queue for

@@ -133,18 +133,14 @@ int
 Scanner::Private::lazy_stat(const char *path, struct stat *stat_buf, const dentry_t& dentry)
 {
 #if HAVE_DIRENT_D_TYPE
-	if (maildirs_only_mode()) {
-		switch (dentry.d_type) {
-		case DT_REG:
-			stat_buf->st_mode = S_IFREG;
-			return 0;
-		case DT_DIR:
-			stat_buf->st_mode = S_IFDIR;
-			return 0;
-		default:
-			/* LNK is inconclusive; we need a stat. */
-			break;
-		}
+	if (dentry.d_type == DT_REG) {
+		// TODO: only do this short-circuit if maildirs_only_mode() or we're configured to ignore ctime.
+		stat_buf->st_mode = S_IFREG;
+		return 0;
+	}
+	if (maildirs_only_mode() && dentry.d_type == DT_DIR) {
+		stat_buf->st_mode = S_IFDIR;
+		return 0;
 	}
 #endif /*HAVE_DIRENT_D_TYPE*/
 
